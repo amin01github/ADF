@@ -1,0 +1,24 @@
+{
+	"name": "Rest_param_DS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Rest_param_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"CountryName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().CountryName",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
