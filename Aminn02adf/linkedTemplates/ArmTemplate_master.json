@@ -7,13 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Aminn02adf"
 		},
+		"AzureDatabricks_LS_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_LS'"
+		},
 		"SQL_DB_LS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQL_DB_LS'"
 		},
 		"Adls_LS_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://amin01adls.dfs.core.windows.net/"
+			"defaultValue": "https://amin02adls.dfs.core.windows.net/"
+		},
+		"AzureDatabricks_LS_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0823-034818-quydceui"
 		},
 		"Rest_LS_properties_typeProperties_url": {
 			"type": "string",
@@ -50,11 +58,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDatabricks_LS_accessToken": {
+						"value": "[parameters('AzureDatabricks_LS_accessToken')]"
+					},
 					"SQL_DB_LS_connectionString": {
 						"value": "[parameters('SQL_DB_LS_connectionString')]"
 					},
 					"Adls_LS_properties_typeProperties_url": {
 						"value": "[parameters('Adls_LS_properties_typeProperties_url')]"
+					},
+					"AzureDatabricks_LS_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_LS_properties_typeProperties_existingClusterId')]"
 					},
 					"Rest_LS_properties_typeProperties_url": {
 						"value": "[parameters('Rest_LS_properties_typeProperties_url')]"

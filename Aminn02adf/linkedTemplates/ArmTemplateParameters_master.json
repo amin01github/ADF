@@ -5,11 +5,17 @@
 		"factoryName": {
 			"value": "Aminn02adf"
 		},
+		"AzureDatabricks_LS_accessToken": {
+			"value": ""
+		},
 		"SQL_DB_LS_connectionString": {
 			"value": ""
 		},
 		"Adls_LS_properties_typeProperties_url": {
-			"value": "https://amin01adls.dfs.core.windows.net/"
+			"value": "https://amin02adls.dfs.core.windows.net/"
+		},
+		"AzureDatabricks_LS_properties_typeProperties_existingClusterId": {
+			"value": "0823-034818-quydceui"
 		},
 		"Rest_LS_properties_typeProperties_url": {
 			"value": "https://restcountries.com/v3.1/all"

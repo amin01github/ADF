@@ -7,13 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Aminn02adf"
 		},
+		"AzureDatabricks_LS_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_LS'"
+		},
 		"SQL_DB_LS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQL_DB_LS'"
 		},
 		"Adls_LS_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://amin01adls.dfs.core.windows.net/"
+			"defaultValue": "https://amin02adls.dfs.core.windows.net/"
+		},
+		"AzureDatabricks_LS_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0823-034818-quydceui"
 		},
 		"Rest_LS_properties_typeProperties_url": {
 			"type": "string",
@@ -37,6 +45,24 @@
 				"type": "AzureBlobFS",
 				"typeProperties": {
 					"url": "[parameters('Adls_LS_properties_typeProperties_url')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1692133462899471.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_LS_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_LS_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []
@@ -104,6 +130,43 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataBricks_Example')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Notebook1",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/azbz15@outlook.com/Test_ADF_Connection"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_LS",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_LS')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ADLS_Customer_STG')]",
