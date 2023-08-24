@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "Aminn02adf"
 		},
+		"AzureDatabricks_Job_Cluster_LS_accessToken": {
+			"value": ""
+		},
 		"AzureDatabricks_LS_accessToken": {
 			"value": ""
 		},

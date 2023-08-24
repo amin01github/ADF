@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Aminn02adf"
 		},
+		"AzureDatabricks_Job_Cluster_LS_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Job_Cluster_LS'"
+		},
 		"AzureDatabricks_LS_accessToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_LS'"
@@ -55,7 +59,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/azbz15@outlook.com/Test_ADF_Connection"
+							"notebookPath": "/Users/azbz15@outlook.com/Test_ADF_Connection",
+							"baseParameters": {
+								"FilePath": "dbfs:/FileStore/shared_uploads/azbz15@outlook.com/Order_tWGZdrz2Br.csv"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks_LS",
@@ -71,6 +78,46 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_LS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataBricks_Job_Cluster_Example')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Notebook1",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/azbz15@outlook.com/Test_ADF_Job_Cluster",
+							"baseParameters": {
+								"FilePath": "dbfs:/FileStore/shared_uploads/azbz15@outlook.com/Order_tWGZdrz2Br.csv"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_Job_Cluster_LS",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_Job_Cluster_LS')]"
 			]
 		},
 		{
@@ -703,6 +750,31 @@
 				"type": "AzureBlobFS",
 				"typeProperties": {
 					"url": "[parameters('Adls_LS_properties_typeProperties_url')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_Job_Cluster_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1692133462899471.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_Job_Cluster_LS_accessToken')]"
+					},
+					"newClusterNodeType": "Standard_DS3_v2",
+					"newClusterNumOfWorker": "2",
+					"newClusterSparkEnvVars": {
+						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+					},
+					"newClusterVersion": "12.2.x-scala2.12",
+					"clusterOption": "Fixed",
+					"newClusterInitScripts": []
 				}
 			},
 			"dependsOn": []

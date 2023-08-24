@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Aminn02adf"
 		},
+		"AzureDatabricks_Job_Cluster_LS_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Job_Cluster_LS'"
+		},
 		"AzureDatabricks_LS_accessToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_LS'"
@@ -58,6 +62,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDatabricks_Job_Cluster_LS_accessToken": {
+						"value": "[parameters('AzureDatabricks_Job_Cluster_LS_accessToken')]"
+					},
 					"AzureDatabricks_LS_accessToken": {
 						"value": "[parameters('AzureDatabricks_LS_accessToken')]"
 					},
@@ -79,6 +86,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "Aminn02adf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'Aminn02adf_ArmTemplate_0')]"
+			]
 		}
 	]
 }
