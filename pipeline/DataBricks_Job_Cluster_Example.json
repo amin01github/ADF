@@ -1,5 +1,5 @@
 {
-	"name": "DataBricks_Example",
+	"name": "DataBricks_Job_Cluster_Example",
 	"properties": {
 		"activities": [
 			{
@@ -15,13 +15,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/azbz15@outlook.com/Test_ADF_Connection",
+					"notebookPath": "/Users/azbz15@outlook.com/Test_ADF_Job_Cluster",
 					"baseParameters": {
 						"FilePath": "dbfs:/FileStore/shared_uploads/azbz15@outlook.com/Order_tWGZdrz2Br.csv"
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "AzureDatabricks_LS",
+					"referenceName": "AzureDatabricks_Job_Cluster_LS",
 					"type": "LinkedServiceReference"
 				}
 			}
